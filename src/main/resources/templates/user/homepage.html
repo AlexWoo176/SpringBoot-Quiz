@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/head::head">
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style></style>
+</head>
+<body>
+<header th:replace="layout/head::header"></header>
+<div th:if="${user}">
+    <div class="login" sec:authorize="isAuthenticated()">
+        <span><a th:href="@{/view/__${user.id}__}" th:text="${user.username}"></a></span>|<a
+            th:href="@{/logout}">Logout</a>
+    </div>
+</div>
+<div th:if="${user==null}">
+    <div class="login" sec:authorize="isAnonymous()">
+        <a th:href="@{/login}" class="btn btn-outline-primary">Login</a>
+        <a href="/register" class="btn btn-outline-secondary">Register</a>
+    </div>
+</div>
+<div>
+    <div th:replace="layout/select::select"></div>
+</div>
+</body>
+</html>
