@@ -19,9 +19,9 @@ import java.util.List;
 
 @Service
 public class RestFB {
-    public static String FACEBOOK_APP_ID = "616714045527311";
-    public static String FACEBOOK_APP_SECRET = "562fbf9241db7c4ad1b54960c1f10a7c";
-    public static String FACEBOOK_REDIRECT_URL = "https://springbootlibrary.herokuapp.com/";
+    public static String FACEBOOK_APP_ID = "747180152392282";
+    public static String FACEBOOK_APP_SECRET = "38ac07ef358483a2b85cfb5099b04674";
+    public static String FACEBOOK_REDIRECT_URL = "https://springboot-quiz.herokuapp.com/";
     public static String FACEBOOK_LINK_GET_TOKEN = "https://graph.facebook.com/oauth/access_token?client_id=%s&client_secret=%s&redirect_uri=%s&code=%s";
 
     public String getToken(final String code) throws ClientProtocolException, IOException {
