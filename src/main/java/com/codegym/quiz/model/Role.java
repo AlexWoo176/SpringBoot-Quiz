@@ -17,5 +17,5 @@ public class Role implements Serializable {
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<User> users = new HashSet<>();
+    private Set<Participant> participants = new HashSet<>();
 }

@@ -59,20 +59,20 @@ public class UserController {
     @GetMapping("/register")
     public ModelAndView showRegisterForm() {
         ModelAndView modelAndView = new ModelAndView(USER_REGISTER);
-        modelAndView.addObject("user", new User());
+        modelAndView.addObject("user", new Participant());
         return modelAndView;
     }
 
     @PostMapping("/register")
-    public ModelAndView registerNewUser(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+    public ModelAndView registerNewUser(@Valid @ModelAttribute Participant participant, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ModelAndView(USER_REGISTER);
         }
-        if (userService.isRegister(user)) {
+        if (userService.isRegister(participant)) {
             ModelAndView modelAndView = new ModelAndView(USER_REGISTER);
             modelAndView.addObject(MESSAGE, "username or email is already registered");
             return modelAndView;
-        } else if (!userService.isCorrectConfirmPassword(user)) {
+        } else if (!userService.isCorrectConfirmPassword(participant)) {
             ModelAndView modelAndView = new ModelAndView(USER_REGISTER);
             modelAndView.addObject(MESSAGE, "Confirm Password is incorrect");
             return modelAndView;
@@ -81,25 +81,25 @@ public class UserController {
             Role role = roleService.findRoleByName(DEFAULT_ROLE);
             Set<Role> roles = new HashSet<>();
             roles.add(role);
-            User currentUser = new User();
-            currentUser.setUsername(user.getUsername());
-            currentUser.setPassword(passwordEncoder.encode(user.getPassword()));
-            currentUser.setConfirmPassword(passwordEncoder.encode(user.getConfirmPassword()));
-            currentUser.setEmail(user.getEmail());
-            currentUser.setPhoneNumber(user.getPhoneNumber());
-            currentUser.setRoles(roles);
-            userService.save(currentUser);
-            VerificationToken token = new VerificationToken(currentUser);
+            Participant currentParticipant = new Participant();
+            currentParticipant.setUsername(participant.getUsername());
+            currentParticipant.setPassword(passwordEncoder.encode(participant.getPassword()));
+            currentParticipant.setConfirmPassword(passwordEncoder.encode(participant.getConfirmPassword()));
+            currentParticipant.setEmail(participant.getEmail());
+            currentParticipant.setPhoneNumber(participant.getPhoneNumber());
+            currentParticipant.setRoles(roles);
+            userService.save(currentParticipant);
+            VerificationToken token = new VerificationToken(currentParticipant);
             token.setExpiryDate(1);
             verificationTokenService.save(token);
             SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(user.getEmail());
+            mailMessage.setTo(participant.getEmail());
             mailMessage.setSubject(SUBJECT);
             mailMessage.setText(TEXT+ token.getToken());
 
-            emailService.sendEmail(user.getEmail(), SUBJECT, TEXT + token.getToken());
-            modelAndView.addObject("user", currentUser);
-            modelAndView.addObject("email", currentUser.getEmail());
+            emailService.sendEmail(participant.getEmail(), SUBJECT, TEXT + token.getToken());
+            modelAndView.addObject("user", currentParticipant);
+            modelAndView.addObject("email", currentParticipant.getEmail());
             return modelAndView;
         }
     }
@@ -111,9 +111,9 @@ public class UserController {
         if (token != null) {
             boolean isExpired = token.isExpired();
             if (!isExpired) {
-                User user = userService.findByEmail(token.getUser().getEmail());
-                user.setEnabled(true);
-                userService.save(user);
+                Participant participant = userService.findByEmail(token.getParticipant().getEmail());
+                participant.setEnabled(true);
+                userService.save(participant);
                 modelAndView = new ModelAndView("user/accountVerified");
                 return modelAndView;
             }
@@ -136,7 +136,7 @@ public class UserController {
         if (token != null) {
             boolean isExpired = token.isExpired();
             if (!isExpired) {
-                Optional<User> user = userService.findById(id);
+                Optional<Participant> user = userService.findById(id);
                 if (user.isPresent()) {
                     ModelAndView modelAndView = new ModelAndView("user/newPassword");
                     modelAndView.addObject("user", user);
@@ -152,13 +152,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/newPassword", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView editUser(@ModelAttribute User user) {
+    public ModelAndView editUser(@ModelAttribute Participant participant) {
         ModelAndView modelAndView = new ModelAndView("user/newPassword");
-        if (!userService.isCorrectConfirmPassword(user)) {
+        if (!userService.isCorrectConfirmPassword(participant)) {
             modelAndView.addObject(MESSAGE, "your confirm password is incorrect");
         } else {
-            String newPassword = passwordEncoder.encode(user.getPassword());
-            Optional<User> currentUser = userService.findById(user.getId());
+            String newPassword = passwordEncoder.encode(participant.getPassword());
+            Optional<Participant> currentUser = userService.findById(participant.getId());
             currentUser.get().setPassword(newPassword);
             userService.save(currentUser.get());
             modelAndView.addObject("user", currentUser);
@@ -169,7 +169,7 @@ public class UserController {
 
     @GetMapping("/view/{id}")
     public ModelAndView viewUser(@PathVariable Long id) {
-        Optional<User> user = userService.findById(id);
+        Optional<Participant> user = userService.findById(id);
         if (!user.isPresent()) {
             return new ModelAndView(ERROR_404);
         }
@@ -185,11 +185,11 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView login(User user) {
+    public ModelAndView login(Participant participant) {
         ModelAndView modelAndView;
-        if (userService.checkLogin(user)) {
+        if (userService.checkLogin(participant)) {
             modelAndView = new ModelAndView("user/homepage");
-            modelAndView.addObject("user", user);
+            modelAndView.addObject("user", participant);
             return modelAndView;
         }
         modelAndView = new ModelAndView("login");

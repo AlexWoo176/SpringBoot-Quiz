@@ -10,7 +10,7 @@
     <th:block th:if="${message}">
         <p th:text="${message}"></p>
     </th:block>
-    <form th:action="@{/register}" th:object="${user}" method="post">
+    <form th:action="@{/register}" th:object="${participant}" method="post">
         <table>
             <tr>
                 <td>Username:</td>

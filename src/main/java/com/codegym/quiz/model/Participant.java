@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Data
-public class User implements Serializable {
+public class Participant implements Serializable {
     private static final long serialVersionUID = 5926468583005150707L;
 
     @Id
@@ -47,7 +47,7 @@ public class User implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
     @JsonIgnore
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "participant")
     private VerificationToken token;
 
     @Transient

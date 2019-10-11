@@ -1,6 +1,6 @@
 package com.codegym.quiz.service.impl;
 
-import com.codegym.quiz.model.User;
+import com.codegym.quiz.model.Participant;
 import com.codegym.quiz.model.UserPrinciple;
 import com.codegym.quiz.repository.UserRepository;
 import com.codegym.quiz.service.UserService;
@@ -21,28 +21,28 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public void save(User user) {
-        userRepository.save(user);
+    public void save(Participant participant) {
+        userRepository.save(participant);
     }
 
     @Override
-    public Iterable<User> findAll() {
+    public Iterable<Participant> findAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public User findByUsername(String username) {
+    public Participant findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Override
-    public boolean checkLogin(User user) {
-        Iterable<User> users = this.findAll();
+    public boolean checkLogin(Participant participant) {
+        Iterable<Participant> users = this.findAll();
         boolean isCorrectUser = false;
-        for (User currentUser : users) {
-            if (currentUser.getUsername().equals(user.getUsername())
-                    && user.getPassword().equals(currentUser.getPassword())&&
-                    currentUser.isEnabled()) {
+        for (Participant currentParticipant : users) {
+            if (currentParticipant.getUsername().equals(participant.getUsername())
+                    && participant.getPassword().equals(currentParticipant.getPassword())&&
+                    currentParticipant.isEnabled()) {
                 isCorrectUser = true;
                 break;
             }
@@ -51,12 +51,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isRegister(User user) {
+    public boolean isRegister(Participant participant) {
         boolean isRegister = false;
-        Iterable<User> users = this.findAll();
-        for (User currentUser : users) {
-            if (user.getUsername().equals(currentUser.getUsername())||
-                    user.getEmail().equals(currentUser.getEmail())) {
+        Iterable<Participant> users = this.findAll();
+        for (Participant currentParticipant : users) {
+            if (participant.getUsername().equals(currentParticipant.getUsername())||
+                    participant.getEmail().equals(currentParticipant.getEmail())) {
                 isRegister = true;
                 break;
             }
@@ -67,44 +67,44 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username){
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
+        Participant participant = userRepository.findByUsername(username);
+        if (participant == null) {
             throw new UsernameNotFoundException(username);
         }
-        if(this.checkLogin(user)){
-            return UserPrinciple.build(user);
+        if(this.checkLogin(participant)){
+            return UserPrinciple.build(participant);
         }
         boolean enable = false;
         boolean accountNonExpired = false;
         boolean credentialsNonExpired = false;
         boolean accountNonLocked = false;
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
-                user.getPassword(),enable,accountNonExpired,credentialsNonExpired,
+        return new org.springframework.security.core.userdetails.User(participant.getUsername(),
+                participant.getPassword(),enable,accountNonExpired,credentialsNonExpired,
                 accountNonLocked,null);
     }
 
     @Override
-    public User findByEmail(String email) {
+    public Participant findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public boolean isCorrectConfirmPassword(User user) {
+    public boolean isCorrectConfirmPassword(Participant participant) {
         boolean isCorrentConfirmPassword = false;
-        if(user.getPassword().equals(user.getConfirmPassword())){
+        if(participant.getPassword().equals(participant.getConfirmPassword())){
             isCorrentConfirmPassword = true;
         }
         return isCorrentConfirmPassword;
     }
 
     @Override
-    public Optional<User> findById(Long id) {
+    public Optional<Participant> findById(Long id) {
         return userRepository.findById(id);
     }
 
     @Override
-    public User getCurrentUser() {
-        User user;
+    public Participant getCurrentUser() {
+        Participant participant;
         String userName;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
         } else {
             userName = principal.toString();
         }
-        user = this.findByUsername(userName);
-        return user;
+        participant = this.findByUsername(userName);
+        return participant;
     }
 }

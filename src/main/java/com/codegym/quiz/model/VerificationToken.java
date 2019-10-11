@@ -26,15 +26,15 @@ public class VerificationToken implements Serializable {
     private Date expiryDate;
 
     @JsonIgnore
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Participant.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
-    private User user;
+    private Participant participant;
 
     public VerificationToken() {
     }
 
-    public VerificationToken(User user) {
-        this.user = user;
+    public VerificationToken(Participant participant) {
+        this.participant = participant;
         createdDate = new Date();
         token = UUID.randomUUID().toString();
     }

@@ -1,27 +1,27 @@
 package com.codegym.quiz.service;
 
-import com.codegym.quiz.model.User;
+import com.codegym.quiz.model.Participant;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Optional;
 
 
 public interface UserService extends UserDetailsService {
-    void save(User user);
+    void save(Participant participant);
 
-    Iterable<User> findAll();
+    Iterable<Participant> findAll();
 
-    User findByUsername(String username);
+    Participant findByUsername(String username);
 
-    boolean checkLogin(User user);
+    boolean checkLogin(Participant participant);
 
-    boolean isRegister(User user);
+    boolean isRegister(Participant participant);
 
-    User findByEmail(String email);
+    Participant findByEmail(String email);
 
-    boolean isCorrectConfirmPassword(User user);
+    boolean isCorrectConfirmPassword(Participant participant);
 
-    Optional<User> findById(Long id);
+    Optional<Participant> findById(Long id);
 
-    User getCurrentUser();
+    Participant getCurrentUser();
 }
