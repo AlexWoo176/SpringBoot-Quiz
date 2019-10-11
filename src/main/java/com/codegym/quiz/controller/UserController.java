@@ -192,7 +192,7 @@ public class UserController {
             modelAndView.addObject("user", participant);
             return modelAndView;
         }
-        modelAndView = new ModelAndView("login");
+        modelAndView = new ModelAndView("user/login");
         modelAndView.addObject(MESSAGE, "username or password incorrect");
         return modelAndView;
     }
