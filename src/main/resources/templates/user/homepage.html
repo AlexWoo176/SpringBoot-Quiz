@@ -8,13 +8,13 @@
 </head>
 <body>
 <header th:replace="layout/head::header"></header>
-<div th:if="${participant}">
+<div th:if="${user}">
     <div class="login" sec:authorize="isAuthenticated()">
-        <span><a th:href="@{/view/__${participant.id}__}" th:text="${participant.username}"></a></span>|<a
+        <span><a th:href="@{/view/__${user.id}__}" th:text="${user.username}"></a></span>|<a
             th:href="@{/logout}">Logout</a>
     </div>
 </div>
-<div th:if="${participant==null}">
+<div th:if="${user==null}">
     <div class="login" sec:authorize="isAnonymous()">
         <a th:href="@{/login}" class="btn btn-outline-primary">Login</a>
         <a href="/register" class="btn btn-outline-secondary">Register</a>

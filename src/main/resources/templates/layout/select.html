@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <div class="list-group select" th:fragment="select">
+            <div class="logo">
+                <h1>iNote</h1>
+            </div>
+            <a href="/inote/homepage" class="list-group-item list-group-item-action list-group-item-warning">Home</a>
+            <a th:href="@{/note/create/__${user?.id}__}" class="list-group-item list-group-item-action list-group-item-warning">Create new note</a>
+            <a th:href="@{/note/notes/__${user?.id}__}" class="list-group-item list-group-item-action list-group-item-warning">List Note</a>
+            <a th:href="@{/tag/tags/__${user?.id}__}" class="list-group-item list-group-item-action list-group-item-warning">Tags</a>
+            <a th:href="@{/stack/stacks/__${user?.id}__}" class="list-group-item list-group-item-action list-group-item-warning">Stacks</a>
+            <a th:href="@{/recycleBin/trashes/__${user?.id}__}" class="list-group-item list-group-item-action list-group-item-warning">Recycle Bin</a>
+        </div>
+    </body>
+</html>af
