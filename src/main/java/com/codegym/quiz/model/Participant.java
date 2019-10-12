@@ -1,6 +1,5 @@
 package com.codegym.quiz.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -40,13 +39,12 @@ public class Participant implements Serializable {
     @Column(columnDefinition = "TINYINT(1)")
     private boolean enabled;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "participant_role",
             joinColumns = {@JoinColumn(name = "participant_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<Role> roles = new HashSet<>();
 
-    @JsonIgnore
     @OneToOne(mappedBy = "participant")
     private VerificationToken token;
 
