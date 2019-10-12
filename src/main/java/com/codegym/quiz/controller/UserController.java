@@ -123,7 +123,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping(value = {"/homepage"})
+    @GetMapping(value = {"/homepage","/"})
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView("user/homepage");
         modelAndView.addObject("user", userService.getCurrentUser());
