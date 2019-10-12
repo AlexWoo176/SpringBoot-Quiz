@@ -159,10 +159,12 @@ public class UserController {
         } else {
             String newPassword = passwordEncoder.encode(participant.getPassword());
             Optional<Participant> currentUser = userService.findById(participant.getId());
-            currentUser.get().setPassword(newPassword);
-            userService.save(currentUser.get());
-            modelAndView.addObject("user", currentUser);
-            modelAndView.addObject(MESSAGE, "Your password is changed");
+            if(currentUser.isPresent()){
+                currentUser.get().setPassword(newPassword);
+                userService.save(currentUser.get());
+                modelAndView.addObject("user", currentUser);
+                modelAndView.addObject(MESSAGE, "Your password is changed");
+            }
         }
         return modelAndView;
     }

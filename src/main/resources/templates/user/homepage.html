@@ -8,7 +8,7 @@
 </head>
 <body>
 <header th:replace="layout/head::header"></header>
-<div th:if="${participant}">
+<div th:if="${participant}||${#request.userPrincipal.name}">
     <div class="login" sec:authorize="isAuthenticated()">
         <span><a th:href="@{/view/__${participant.id}__}" th:text="${participant.username}"></a></span>|<a
             th:href="@{/logout}">Logout</a>
