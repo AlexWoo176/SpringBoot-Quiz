@@ -13,6 +13,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "participant")
 public class Participant implements Serializable {
     private static final long serialVersionUID = 5926468583005150707L;
 
