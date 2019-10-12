@@ -37,7 +37,6 @@ public class Participant implements Serializable {
 
     private String phoneNumber;
 
-    @Column(columnDefinition = "TINYINT(1)")
     private boolean enabled;
 
     @ManyToMany
