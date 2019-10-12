@@ -27,7 +27,7 @@ public class VerificationToken implements Serializable {
 
     @JsonIgnore
     @OneToOne(targetEntity = Participant.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
+    @JoinColumn(nullable = false, name = "participant_id")
     private Participant participant;
 
     public VerificationToken() {
