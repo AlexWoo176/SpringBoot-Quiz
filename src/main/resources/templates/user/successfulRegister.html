@@ -5,7 +5,7 @@
     <title>Registration Success</title>
 </head>
 <div class="start">
-    <form th:action="@{/sendOTP}" th:object="${user}" method="post">
+    <form th:action="@{/sendOTP}" th:object="${participant}" method="post">
         <div>
             <span th:text="'A verification email has been sent to: ' + ${email}"></span>
         </div>
