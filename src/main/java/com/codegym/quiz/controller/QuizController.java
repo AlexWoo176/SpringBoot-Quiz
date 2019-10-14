@@ -25,7 +25,7 @@ public class QuizController {
         return modelAndView;
     }
 
-    @GetMapping(name = "/question",params = {"id"})
+    @GetMapping(name = "/question/{id}")
     public ModelAndView showQuestion(@RequestParam("id") Long id){
         Optional<Quiz> quiz = quizService.findById(id);
         ModelAndView modelAndView = new ModelAndView("quiz/question");
