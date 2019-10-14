@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>New Question</title>
 </head>
 <body>
-
+<h1>Add new question</h1>
+<div class="container">
+    <p>
+        <a href="/books">Questions</a>
+    </p>
+    <h1>Add new question</h1>
+    <th:block th:if="${message}">
+        <p th:text="${message}"></p>
+    </th:block>
+    <form th:action="@{/newQuestion}" th:object="${quiz}" method="post">
+        <table>
+            <tr>
+                <td>Question:</td>
+                <td><input type="text" th:field="*{question}"></td>
+            </tr>
+            <tr>
+                <td>Answer A:</td>
+                <td><input type="text" th:field="*{answerA}"></td>
+            </tr>
+                <td>Answer B:</td>
+                <td><input type="text" th:field="*{answerB}"></td>
+            </tr>
+                <td>Answer C:</td>
+                <td><input type="text" th:field="*{answerC}"></td>
+            </tr>
+                <td>Answer D:</td>
+                <td><input type="text" th:field="*{answerD}"></td>
+            </tr>
+                <td>Correct Answer:</td>
+                <td><input type="text" th:field="*{correctAnswer}"></td>
+            </tr>
+        </table>
+        <center>
+            <input type="submit" value="Add new question">
+        </center>
+    </form>
+</div>
 </body>
 </html>
