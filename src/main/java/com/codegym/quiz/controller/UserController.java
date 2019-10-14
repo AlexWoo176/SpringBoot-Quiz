@@ -59,7 +59,7 @@ public class UserController {
     @GetMapping("/register")
     public ModelAndView showRegisterForm() {
         ModelAndView modelAndView = new ModelAndView(USER_REGISTER);
-        modelAndView.addObject("user", new Participant());
+        modelAndView.addObject("participant", new Participant());
         return modelAndView;
     }
 
@@ -98,7 +98,7 @@ public class UserController {
             mailMessage.setText(TEXT+ token.getToken());
 
             emailService.sendEmail(participant.getEmail(), SUBJECT, TEXT + token.getToken());
-            modelAndView.addObject("user", currentParticipant);
+            modelAndView.addObject("participant", currentParticipant);
             modelAndView.addObject("email", currentParticipant.getEmail());
             return modelAndView;
         }
