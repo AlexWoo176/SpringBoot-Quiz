@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Question <span th:text="${quiz.id}"></span></title>
 </head>
 <body>
-
+<p th:text="${quiz.question}"></p>
+<table>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td th:text="${quiz.answerA}"></td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td th:text="${quiz.answerB}"></td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td th:text="${quiz.answerC}"></td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td th:text="${quiz.answerD}"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit">submit</td>
+    </tr>
+</table>
 </body>
 </html>
