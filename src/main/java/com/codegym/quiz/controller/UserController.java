@@ -126,7 +126,7 @@ public class UserController {
     @GetMapping(value = {"/homepage","/"})
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView("user/homepage");
-        modelAndView.addObject("user", userService.getCurrentUser());
+        modelAndView.addObject("participant", userService.getCurrentUser());
         return modelAndView;
     }
 
