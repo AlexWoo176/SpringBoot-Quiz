@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -139,7 +140,7 @@ public class UserController {
                 Optional<Participant> user = userService.findById(id);
                 if (user.isPresent()) {
                     ModelAndView modelAndView = new ModelAndView("user/newPassword");
-                    modelAndView.addObject("user", user);
+                    modelAndView.addObject("participant", user);
                     return modelAndView;
                 }
             }
@@ -162,7 +163,7 @@ public class UserController {
             if(currentUser.isPresent()){
                 currentUser.get().setPassword(newPassword);
                 userService.save(currentUser.get());
-                modelAndView.addObject("user", currentUser);
+                modelAndView.addObject("participant", currentUser);
                 modelAndView.addObject(MESSAGE, "Your password is changed");
             }
         }
@@ -177,7 +178,7 @@ public class UserController {
         }
 
         ModelAndView modelAndView = new ModelAndView("user/view");
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("participant", user);
         return modelAndView;
     }
 
@@ -191,7 +192,7 @@ public class UserController {
         ModelAndView modelAndView;
         if (userService.checkLogin(participant)) {
             modelAndView = new ModelAndView("user/homepage");
-            modelAndView.addObject("user", participant);
+            modelAndView.addObject("participant", participant);
             return modelAndView;
         }
         modelAndView = new ModelAndView("user/login");
@@ -200,7 +201,7 @@ public class UserController {
     }
 
     @PostMapping("/login-facebook")
-    public String loginFacebook(HttpServletRequest request) {
+    public String loginFacebook(HttpServletRequest request, Model model) {
         String code = request.getParameter("code");
         String accessToken = "";
         try {
@@ -214,6 +215,9 @@ public class UserController {
                 userDetail.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        Participant participant = new Participant();
+        participant.setUsername(user.getName());
+        model.addAttribute("participant",participant);
         return "redirect:homepage";
     }
 
