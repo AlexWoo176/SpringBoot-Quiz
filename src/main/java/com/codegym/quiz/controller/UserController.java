@@ -23,6 +23,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+
 @Controller
 public class UserController {
 
@@ -217,6 +219,8 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         Participant participant = new Participant();
         participant.setUsername(user.getName());
+        participant.setPassword(randomAlphabetic(8));
+        userService.save(participant);
         model.addAttribute("participant",participant);
         return "redirect:homepage";
     }

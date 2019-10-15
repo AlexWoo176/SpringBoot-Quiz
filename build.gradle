@@ -63,4 +63,5 @@ dependencies {
 	compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.12'
 	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
 	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
+	implementation 'org.apache.commons:commons-lang3'
 }
