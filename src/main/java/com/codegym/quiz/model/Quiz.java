@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,13 +20,7 @@ public class Quiz implements Serializable {
 
     private String question;
 
-    private String answerA;
-
-    private String answerB;
-
-    private String answerC;
-
-    private String answerD;
+    List<String> answers;
 
     private String correctAnswer;
 
